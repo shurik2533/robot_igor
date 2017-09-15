@@ -90,7 +90,7 @@ def save_speech(data, p):
     """ Saves mic data to temporary WAV file. Returns filename of saved
         file """
 
-    filename = 'out/output_'+str(int(time.time()))
+    filename = 'out/mic_'+str(int(time.time()))
     # writes data to WAV file
     data = ''.join(data)
     wf = wave.open(filename + '.wav', 'wb')
@@ -102,5 +102,5 @@ def save_speech(data, p):
     return filename + '.wav'
 
 
-if(__name__ == '__main__'):
-    print listen_for_speech(num_phrases=1)  # listen to mic.
+# if(__name__ == '__main__'):
+#     print listen_for_speech(num_phrases=1)  # listen to mic.
