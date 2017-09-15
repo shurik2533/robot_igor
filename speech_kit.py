@@ -39,7 +39,7 @@ def sound_to_text(filename, topic):
             UUID, YANDEX_KEY, topic
         ), data=chunked, headers=headers, verify=False)
 
-        dom = parseString(r.text)
+        dom = parseString(r.text.encode('utf-8'))
         return [v.firstChild.nodeValue for v in dom.getElementsByTagName('variant')]
 
 
@@ -60,4 +60,4 @@ def play_text(text):
     subprocess.call(["afplay", file_name])
 
 
-play_text("Привет, детка! Как дел+а? Давай дружить?")
+# play_text("Привет, детка! Как дел+а? Давай дружить?")
