@@ -57,8 +57,8 @@ def add_phone(phone, resume_id):
             "preferred": True,
             "value": {
                 "country": "7",
-                "city": "123",
-                "number": "4567890",
+                "city": phone['city'],
+                "number": phone['number'],
             }
         },
         {
