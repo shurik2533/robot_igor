@@ -40,10 +40,13 @@ def sound_to_text(filename, topic):
         ), data=chunked, headers=headers, verify=False)
 
         dom = parseString(r.text.encode('utf-8'))
-        return [v.firstChild.nodeValue for v in dom.getElementsByTagName('variant')]
 
+        elements = dom.getElementsByTagName('variant')
+        if len(elements) == 0 or elements[0].firstChild is None:
+            print 'Empty result from Yandex recognition'
+            return []
+        return [v.firstChild.nodeValue for v in elements]
 
-# print sound_to_text('out/output_1505479615.wav', 'numbers')
 
 def play_text(text):
     r = requests.get(
@@ -58,6 +61,3 @@ def play_text(text):
         r.raw.decode_content = True
         shutil.copyfileobj(r.raw, f)
     subprocess.call(["afplay", file_name])
-
-
-# play_text("Привет, детка! Как дел+а? Давай дружить?")

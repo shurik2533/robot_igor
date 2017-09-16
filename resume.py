@@ -1,11 +1,13 @@
 # -*- coding: utf-8 -*-
 import requests
+import re
 
 
 API_TOKEN = 'P23VEDBPKL4PQ1ESR0LI9LA0OLK3HHD9T2KVROV6760TTJ8FDNJ6V1ALOBG3JMBP'
 
 
 def create_or_update_resume(json, resume_id=None):
+    print 'API request: ', json
     headers = {
         'Authorization': 'Bearer {}'.format(API_TOKEN),
         'User-Agent': 'Robot-igor'
@@ -26,8 +28,44 @@ def create_or_update_resume(json, resume_id=None):
 
 
 def add_first_name(first_name):
-    return create_or_update_resume({'first_name': first_name})
+    return create_or_update_resume({'first_name': first_name.decode('utf-8').capitalize()})
 
 
-def add_first_name(last_name, resume_id):
-    return create_or_update_resume({'last_name': last_name}, resume_id)
+def add_last_name(last_name, resume_id):
+    return create_or_update_resume({'last_name': last_name.decode('utf-8').capitalize()}, resume_id)
+
+
+def add_title(title, resume_id):
+    return create_or_update_resume({'title': title.decode('utf-8').capitalize()}, resume_id)
+
+
+def add_salary(amount, resume_id):
+    amount = re.sub('[^0-9]', '', amount)
+    return create_or_update_resume({"salary": {
+        "amount": amount,
+        "currency": "RUR"
+    }}, resume_id)
+
+
+def add_phone(phone, resume_id):
+    return create_or_update_resume({"contact": [
+        {
+            "comment": "",
+            "type": {
+                "id": "cell"
+            },
+            "preferred": True,
+            "value": {
+                "country": "7",
+                "city": "123",
+                "number": "4567890",
+            }
+        },
+        {
+            "type": {
+                "id": "email"
+            },
+            "preferred": False,
+            "value": "applicant@example.com"
+        }
+    ]}, resume_id)
