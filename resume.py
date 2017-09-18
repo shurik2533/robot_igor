@@ -1,6 +1,10 @@
 # -*- coding: utf-8 -*-
 import requests
 import re
+from requests.packages.urllib3.exceptions import InsecureRequestWarning
+
+
+requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
 
 API_TOKEN = 'P23VEDBPKL4PQ1ESR0LI9LA0OLK3HHD9T2KVROV6760TTJ8FDNJ6V1ALOBG3JMBP'
